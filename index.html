@@ -14,7 +14,9 @@
     --text-primary:#e8ecf0;--text-secondary:#7a8494;--text-muted:#3d4555;
     --blue:#3d6fa8;--blue-bright:#5a8fd4;--blue-dim:rgba(61,111,168,0.15);--blue-border:rgba(61,111,168,0.3);
     --red:#c44a3a;
-    --cell:28px;
+    --cell:28px; /* calculado dinamicamente via JS */
+    --label-w:140px;
+    --cell-gap:4px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{height:100%;background:var(--bg);}
@@ -41,11 +43,37 @@
   .chip:hover{border-color:var(--border-hover);color:var(--text-primary);}
   .chip.active{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-bright);}
   .filter-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;}
+
+  /* ── DATE CHIP ── */
   .date-chip-wrap{display:flex;align-items:center;gap:6px;}
-  .date-chip{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:4px 10px;cursor:pointer;transition:all 0.12s;white-space:nowrap;user-select:none;position:relative;}
+  .date-chip{
+    font-family:'DM Mono',monospace;font-size:11px;
+    color:var(--text-secondary);background:var(--surface);
+    border:1px solid var(--border);border-radius:3px;
+    padding:4px 10px;
+    white-space:nowrap;user-select:none;
+    /* contém o input absoluto */
+    position:relative;
+    display:inline-flex;align-items:center;
+    cursor:pointer;
+    transition:border-color 0.12s, color 0.12s;
+  }
   .date-chip:hover{border-color:var(--border-hover);color:var(--text-primary);}
   .date-chip.has-custom{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-bright);}
-  .date-chip input[type=date]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;}
+  .date-chip input[type=date]{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    width:100%;height:100%;
+    opacity:0;
+    cursor:pointer;
+    z-index:2; /* garante que cobre o span */
+  }
+  .date-chip span{
+    position:relative;
+    z-index:1;
+    pointer-events:none; /* cliques passam para o input acima */
+  }
+
   .date-sep{font-size:10px;color:var(--text-muted);}
   .reset-lnk{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-muted);cursor:pointer;transition:opacity 0.15s,color 0.12s;white-space:nowrap;user-select:none;line-height:1;}
   .reset-lnk:hover{color:var(--text-secondary);}
@@ -83,14 +111,14 @@
   .heatmap-wrap::-webkit-scrollbar-track{background:transparent;}
   .heatmap-wrap::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:2px;}
 
-  .hm-header-row{display:flex;align-items:center;gap:4px;margin-bottom:6px;}
-  .hm-header-spacer{width:140px;min-width:140px;flex-shrink:0;}
-  .hm-row{display:flex;align-items:center;gap:4px;margin-bottom:4px;}
-  .hm-label{font-size:11px;color:var(--text-secondary);width:140px;min-width:140px;flex-shrink:0;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .hm-header-row{display:flex;align-items:center;gap:var(--cell-gap);margin-bottom:6px;}
+  .hm-header-spacer{width:var(--label-w);min-width:var(--label-w);flex-shrink:0;}
+  .hm-row{display:flex;align-items:center;gap:var(--cell-gap);margin-bottom:var(--cell-gap);}
+  .hm-label{font-size:11px;color:var(--text-secondary);width:var(--label-w);min-width:var(--label-w);flex-shrink:0;font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .hm-label.outros{color:var(--text-muted);font-style:italic;}
-  .hm-cells{display:flex;gap:4px;}
+  .hm-cells{display:flex;gap:var(--cell-gap);}
   .hm-cell{width:var(--cell);height:var(--cell);border-radius:4px;cursor:default;transition:transform 0.1s;flex-shrink:0;}
-  .hm-cell:hover{transform:scale(1.25);z-index:10;}
+  .hm-cell:hover{transform:scale(1.2);z-index:10;}
   .hm-cell.today-col{box-shadow:0 0 0 1.5px rgba(90,143,212,0.6);}
   .hm-cell.outros-cell{opacity:0.65;}
 
@@ -139,9 +167,15 @@
   <div class="filter-group">
     <span class="filter-group-label">Período</span>
     <div class="date-chip-wrap">
-      <div class="date-chip" id="chip-from"><span id="lbl-from">—</span><input type="date" id="date-from" onchange="onDateChange()"/></div>
+      <div class="date-chip" id="chip-from">
+        <span id="lbl-from">—</span>
+        <input type="date" id="date-from" onchange="onDateChange()"/>
+      </div>
       <span class="date-sep">—</span>
-      <div class="date-chip" id="chip-to"><span id="lbl-to">—</span><input type="date" id="date-to" onchange="onDateChange()"/></div>
+      <div class="date-chip" id="chip-to">
+        <span id="lbl-to">—</span>
+        <input type="date" id="date-to" onchange="onDateChange()"/>
+      </div>
       <span class="reset-lnk hidden" id="reset-btn" onclick="resetDates()">limpar</span>
     </div>
   </div>
@@ -167,7 +201,7 @@
     </div>
   </div>
 
-  <div class="heatmap-wrap">
+  <div class="heatmap-wrap" id="heatmap-wrap">
     <div id="heatmap-container"><div class="loading-msg">carregando dados...</div></div>
     <div class="legend-row">
       <div class="legend-heat">
@@ -191,6 +225,11 @@
 <script>
 const WEBHOOK_URL = 'https://n8n.quartoavista.com.br/webhook/HeatMap';
 const REFRESH_INTERVAL = 5 * 60 * 1000;
+const LABEL_W = 140;   // px — largura da coluna de labels
+const CELL_GAP = 4;    // px — gap entre células
+const CELL_MIN = 20;   // px — tamanho mínimo aceitável
+const CELL_MAX = 44;   // px — tamanho máximo aceitável
+const PADDING  = 40;   // px — padding interno do heatmap-wrap (2×20)
 
 const heatColors = ['#12151a','#121820','#131d2a','#152338','#1a2e4a','#1f3d60','#2a5280','#9e6020','#b84030','#c42a20'];
 function stressToColor(v){ return heatColors[Math.min(Math.floor(v*10), heatColors.length-1)]; }
@@ -204,6 +243,20 @@ let currentTab='empreendimentos', currentLocalidade='todas', currentView='calend
 let filterFrom='', filterTo='', defaultFrom='', defaultTo='';
 let dataMin='', dataMax='', allData=[];
 
+// ── Calcula o tamanho ideal da célula para preencher o container ──
+function calcCellSize(numCols){
+  const wrap = document.getElementById('heatmap-wrap');
+  if(!wrap || numCols===0) return CELL_MIN;
+  const available = wrap.clientWidth - PADDING - LABEL_W - (numCols - 1) * CELL_GAP;
+  const ideal = Math.floor(available / numCols);
+  return Math.min(CELL_MAX, Math.max(CELL_MIN, ideal));
+}
+
+function applyCellSize(size){
+  document.documentElement.style.setProperty('--cell', size + 'px');
+}
+
+// ── Data load ────────────────────────────────────────────────────
 async function loadData(){
   const dot=document.getElementById('live-dot');
   dot.textContent='atualizando...'; dot.className='live-dot';
@@ -224,6 +277,7 @@ async function loadData(){
   }
 }
 
+// ── Dates ────────────────────────────────────────────────────────
 function initDates(){
   const dates=allData.map(d=>d.data).sort();
   dataMin=dates[0]||todayStr();
@@ -273,6 +327,7 @@ function resetDates(){
 
 function getFilteredData(){ return allData.filter(d=>d.data>=filterFrom&&d.data<=filterTo); }
 
+// ── Tabs / Filtros ───────────────────────────────────────────────
 function setTab(tab,el){
   currentTab=tab;
   document.querySelectorAll('#tab-chips .chip').forEach(c=>c.classList.remove('active'));
@@ -300,7 +355,6 @@ function getTipoKey(){
 
 function updateLocalidadeChips(){
   const tipo=getTipoKey(); const set=new Set();
-  // Outros não aparece como chip de filtro
   allData.forEach(d=>Object.keys(d[tipo]||{}).forEach(g=>{ if(g!=='Outros') set.add(g); }));
   const chips=document.getElementById('localidade-chips');
   chips.innerHTML='<div class="chip active" onclick="setLocalidade(\'todas\',this)">Todas</div>';
@@ -310,6 +364,7 @@ function updateLocalidadeChips(){
   currentLocalidade='todas';
 }
 
+// ── Render ───────────────────────────────────────────────────────
 function renderCards(dayData){
   const tipo=getTipoKey(); const grupos=dayData[tipo]||{};
   let ci=0,co=0,tv=0,oc=0;
@@ -328,7 +383,6 @@ function renderHeatmap(data){
   const gruposSet=new Set();
   data.forEach(d=>Object.keys(d[tipo]||{}).forEach(g=>gruposSet.add(g)));
 
-  // Outros sempre por último
   let grupos=Array.from(gruposSet).filter(g=>g!=='Outros').sort();
   if(gruposSet.has('Outros')) grupos.push('Outros');
   if(currentLocalidade!=='todas') grupos=grupos.filter(g=>g===currentLocalidade||g==='Outros');
@@ -338,6 +392,15 @@ function renderHeatmap(data){
     return;
   }
 
+  // calcula e aplica tamanho das células ANTES de renderizar
+  const numCols = data.length;
+  const cellSize = calcCellSize(numCols);
+  applyCellSize(cellSize);
+
+  // font-size das labels de data proporcional à célula
+  const dateFontSm = Math.max(8,  Math.round(cellSize * 0.32)) + 'px';
+  const dateFontLg = Math.max(9,  Math.round(cellSize * 0.37)) + 'px';
+
   const today=todayStr();
 
   // header
@@ -346,9 +409,9 @@ function renderHeatmap(data){
     const wknd=isWeekend(d.data); const isToday=d.data===today;
     const color=(isToday||wknd)?'var(--blue-bright)':'var(--text-muted)';
     const fw=(isToday||wknd)?'500':'400';
-    html+=`<div style="display:flex;flex-direction:column;align-items:center;width:var(--cell);min-width:var(--cell);flex-shrink:0;gap:1px;">
-      <span style="font-size:9px;font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${getDayAbbr(d.data)}</span>
-      <span style="font-size:10px;font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${d.data.split('-')[2]}</span>
+    html+=`<div style="display:flex;flex-direction:column;align-items:center;width:${cellSize}px;min-width:${cellSize}px;flex-shrink:0;gap:1px;">
+      <span style="font-size:${dateFontSm};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${getDayAbbr(d.data)}</span>
+      <span style="font-size:${dateFontLg};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${d.data.split('-')[2]}</span>
     </div>`;
   });
   html+='</div></div>';
@@ -388,6 +451,9 @@ function renderAll(){
   renderCards(todayData);
   renderHeatmap(data);
 }
+
+// recalcula ao redimensionar a janela
+window.addEventListener('resize', ()=>{ if(allData.length) renderAll(); });
 
 loadData();
 setInterval(loadData, REFRESH_INTERVAL);
