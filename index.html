@@ -26,7 +26,6 @@
   ::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:2px;}
   ::-webkit-scrollbar-thumb:hover{background:var(--text-secondary);}
 
-  /* ── HEADER ── */
   .header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:var(--bg);}
   .header-left{display:flex;align-items:center;gap:10px;}
   .brand-mark{width:26px;height:26px;border-radius:5px;background:var(--blue-dim);border:1px solid var(--blue-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -36,7 +35,6 @@
   .live-dot::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue-bright);box-shadow:0 0 0 2px var(--blue-dim);}
   .live-dot.error::before{background:var(--red);box-shadow:0 0 0 2px rgba(196,74,58,0.2);}
 
-  /* ── FILTER BAR ── */
   .filter-bar{padding:11px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
   .filter-group{display:flex;align-items:center;gap:8px;}
   .filter-group-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
@@ -57,12 +55,10 @@
   .reset-lnk.hidden{opacity:0;pointer-events:none;width:0;overflow:hidden;display:inline-block;}
   .reset-lnk.visible{opacity:1;pointer-events:auto;display:inline-block;}
 
-  /* ── CONTENT ── */
   .content{padding:24px 32px 0;}
   .today-date-label{font-size:11px;color:var(--text-secondary);font-family:'DM Mono',monospace;margin-bottom:16px;}
   .today-date-label span{color:var(--blue-bright);}
 
-  /* ── CARDS ── */
   .cards-grid{display:grid;gap:8px;margin-bottom:8px;}
   .cards-grid.cal{grid-template-columns:repeat(4,1fr);margin-bottom:28px;}
   .cards-grid.agd-main{grid-template-columns:repeat(3,1fr);}
@@ -78,31 +74,31 @@
   .card-value.sm{font-size:24px;}
   .card-sub{font-size:10px;color:var(--text-muted);margin-top:8px;line-height:1.4;}
 
-  /* card outros com tooltip */
+  /* card outros */
   .card-outros{position:relative;cursor:default;}
+  .card-outros.com-dados:hover .outros-tip{display:block;}
+  .card-outros.sem-dados .card-value{color:var(--text-muted);}
+  .card-outros.sem-dados .card-sub{color:var(--text-muted);font-style:italic;}
+  .card-outros.sem-dados .outros-tip{display:none !important;}
   .outros-tip{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#1e2330;border:1px solid var(--border-hover);border-radius:5px;padding:10px 12px;font-size:10px;color:var(--text-secondary);white-space:nowrap;z-index:50;line-height:1.8;pointer-events:none;}
   .outros-tip .tip-row{display:flex;justify-content:space-between;gap:20px;}
   .outros-tip strong{color:var(--text-primary);font-weight:500;}
-  .card-outros:hover .outros-tip{display:block;}
 
   .secondary-label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:14px 0 10px;display:flex;align-items:center;gap:8px;}
   .secondary-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* ── SECTION HEADER ── */
   .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .section-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
   .section-right{display:flex;align-items:center;gap:12px;}
   .range-info{font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace;}
   .range-info span{color:var(--blue-bright);}
 
-  /* ── VIEW TOGGLE ── */
   .view-toggle{display:flex;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px;}
   .view-toggle.hidden{display:none;}
   .vt-btn{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text-muted);padding:3px 8px;border-radius:3px;cursor:pointer;transition:all 0.12s;white-space:nowrap;user-select:none;line-height:1.4;}
   .vt-btn:hover{color:var(--text-secondary);}
   .vt-btn.active{background:var(--blue-dim);color:var(--blue-bright);}
 
-  /* ── HEATMAP ── */
   .heatmap-wrap{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:20px 20px 16px;overflow-x:auto;margin-bottom:16px;}
   .heatmap-wrap::-webkit-scrollbar{height:3px;}
   .heatmap-wrap::-webkit-scrollbar-track{background:transparent;}
@@ -123,7 +119,6 @@
   .legend-swatch{width:14px;height:14px;border-radius:2px;flex-shrink:0;}
   .today-swatch{background:var(--bg);border:1.5px solid rgba(90,143,212,0.6);}
 
-  /* ── NOTICE ── */
   .capacity-notice{background:var(--surface-2);border:1px solid var(--border);border-left:2px solid var(--blue);border-radius:4px;padding:10px 14px;font-size:11px;color:var(--text-secondary);line-height:1.5;}
   .capacity-notice strong{color:var(--text-primary);font-weight:500;}
   .loading-msg{color:var(--text-muted);font-size:11px;font-family:'DM Mono',monospace;padding:24px 0;}
@@ -181,7 +176,6 @@
 <div class="content">
   <div class="today-date-label" id="hoje-label">Hoje — <span>—</span></div>
 
-  <!-- CARDS CALENDÁRIO (empreendimentos ou regionais visão calendário) -->
   <div id="cards-cal">
     <div class="cards-grid cal">
       <div class="card"><div class="card-label">Check-ins</div><div class="card-value blue" id="card-ci">—</div><div class="card-sub">unidades recebendo hóspedes</div></div>
@@ -191,7 +185,6 @@
     </div>
   </div>
 
-  <!-- CARDS AGENDAMENTOS (só regionais visão agendamentos) -->
   <div id="cards-agd" style="display:none">
     <div class="cards-grid agd-main">
       <div class="card"><div class="card-label">Entradas</div><div class="card-value blue" id="agd-entradas">—</div><div class="card-sub">agendamentos de entrada</div></div>
@@ -203,10 +196,10 @@
       <div class="card"><div class="card-label">Extra</div><div class="card-value sm" id="agd-extra">—</div><div class="card-sub">extra + enxoval extra</div></div>
       <div class="card"><div class="card-label">Periódica</div><div class="card-value sm" id="agd-periodica">—</div><div class="card-sub">limpezas periódicas</div></div>
       <div class="card"><div class="card-label">Revisão</div><div class="card-value sm" id="agd-revisao">—</div><div class="card-sub">revisões agendadas</div></div>
-      <div class="card card-outros">
+      <div class="card card-outros sem-dados" id="card-outros-wrap">
         <div class="card-label">Outros</div>
         <div class="card-value sm" id="agd-outros">—</div>
-        <div class="card-sub">passe o mouse para detalhar</div>
+        <div class="card-sub" id="agd-outros-sub">sem ocorrências hoje</div>
         <div class="outros-tip" id="agd-outros-tip"></div>
       </div>
     </div>
@@ -239,7 +232,7 @@
     </div>
   </div>
 
-  <div class="capacity-notice" id="capacity-notice">
+  <div class="capacity-notice">
     <strong>Em breve:</strong> integração com escala dos times — a carga será calculada contra a capacidade produtiva real de cada equipe, identificando automaticamente os dias que precisam de reforço com diaristas.
   </div>
 </div>
@@ -247,14 +240,10 @@
 <script>
 const WEBHOOK_URL = 'https://n8n.quartoavista.com.br/webhook/HeatMap';
 const REFRESH_INTERVAL = 5 * 60 * 1000;
-const LABEL_W  = 140;
-const CELL_GAP = 4;
-const CELL_MIN = 20;
-const CELL_MAX = 44;
-const PADDING  = 40;
+const LABEL_W=140, CELL_GAP=4, CELL_MIN=20, CELL_MAX=44, PADDING=40;
 
-const heatColors = ['#12151a','#121820','#131d2a','#152338','#1a2e4a','#1f3d60','#2a5280','#9e6020','#b84030','#c42a20'];
-function stressToColor(v){ return heatColors[Math.min(Math.floor(v*10), heatColors.length-1)]; }
+const heatColors=['#12151a','#121820','#131d2a','#152338','#1a2e4a','#1f3d60','#2a5280','#9e6020','#b84030','#c42a20'];
+function stressToColor(v){ return heatColors[Math.min(Math.floor(v*10),heatColors.length-1)]; }
 function todayStr(){ return new Date().toISOString().split('T')[0]; }
 function isWeekend(ds){ const d=new Date(ds+'T12:00:00'); return d.getDay()===0||d.getDay()===6; }
 function getDayAbbr(ds){ return ['D','S','T','Q','Q','S','S'][new Date(ds+'T12:00:00').getDay()]; }
@@ -265,17 +254,13 @@ let currentTab='empreendimentos', currentLocalidade='todas', currentView='calend
 let filterFrom='', filterTo='', defaultFrom='', defaultTo='';
 let dataMin='', dataMax='', allData=[];
 
-function calcCellSize(numCols){
-  const wrap=document.getElementById('heatmap-wrap');
-  if(!wrap||numCols===0) return CELL_MIN;
-  const available=wrap.clientWidth-PADDING-LABEL_W-(numCols-1)*CELL_GAP;
-  return Math.min(CELL_MAX, Math.max(CELL_MIN, Math.floor(available/numCols)));
+function calcCellSize(n){
+  const w=document.getElementById('heatmap-wrap');
+  if(!w||n===0) return CELL_MIN;
+  return Math.min(CELL_MAX,Math.max(CELL_MIN,Math.floor((w.clientWidth-PADDING-LABEL_W-(n-1)*CELL_GAP)/n)));
 }
-function applyCellSize(size){
-  document.documentElement.style.setProperty('--cell', size+'px');
-}
+function applyCellSize(s){ document.documentElement.style.setProperty('--cell',s+'px'); }
 
-// ── DATA LOAD ────────────────────────────────────────────
 async function loadData(){
   const dot=document.getElementById('live-dot');
   dot.textContent='atualizando...'; dot.className='live-dot';
@@ -291,12 +276,10 @@ async function loadData(){
   } catch(e){
     console.error(e);
     dot.textContent='erro ao carregar'; dot.className='live-dot error';
-    document.getElementById('heatmap-container').innerHTML=
-      '<div class="loading-msg" style="color:var(--red)">Não foi possível conectar ao servidor.</div>';
+    document.getElementById('heatmap-container').innerHTML='<div class="loading-msg" style="color:var(--red)">Não foi possível conectar ao servidor.</div>';
   }
 }
 
-// ── DATES ────────────────────────────────────────────────
 function initDates(){
   const dates=allData.map(d=>d.data).sort();
   dataMin=dates[0]||todayStr();
@@ -307,8 +290,7 @@ function initDates(){
   filterFrom=defaultFrom; filterTo=defaultTo;
   const iF=document.getElementById('date-from');
   const iT=document.getElementById('date-to');
-  iF.min=dataMin; iF.max=dataMax;
-  iT.min=dataMin; iT.max=dataMax;
+  iF.min=dataMin; iF.max=dataMax; iT.min=dataMin; iT.max=dataMax;
   iF.value=filterFrom; iT.value=filterTo;
   updateDateUI();
 }
@@ -341,44 +323,36 @@ function resetDates(){
 }
 function getFilteredData(){ return allData.filter(d=>d.data>=filterFrom&&d.data<=filterTo); }
 
-// ── TAB / VIEW / LOCALIDADE ──────────────────────────────
 function setTab(tab,el){
   currentTab=tab;
   document.querySelectorAll('#tab-chips .chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
-  // toggle só visível nas regionais
   document.getElementById('view-toggle').className='view-toggle'+(tab==='regionais'?'':' hidden');
-  // se mudar para empreendimentos, força visão calendário
   if(tab==='empreendimentos') forceView('calendario');
   updateLocalidadeChips(); renderAll();
 }
-
 function forceView(view){
   currentView=view;
   document.querySelectorAll('.vt-btn').forEach(b=>{
     b.classList.toggle('active', b.textContent.trim()===(view==='calendario'?'calendário':'agendamentos'));
   });
 }
-
 function setView(view,el){
   currentView=view;
   document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
   updateLocalidadeChips(); renderAll();
 }
-
 function setLocalidade(loc,el){
   currentLocalidade=loc;
   document.querySelectorAll('#localidade-chips .chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active'); renderAll();
 }
-
 function getTipoKey(){
   if(currentTab==='empreendimentos') return 'dados_empreendimentos';
   if(currentView==='agendamento') return 'dados_regionais_agendamento';
   return 'dados_regionais';
 }
-
 function updateLocalidadeChips(){
   const tipo=getTipoKey(); const set=new Set();
   allData.forEach(d=>Object.keys(d[tipo]||{}).forEach(g=>{ if(g!=='Outros') set.add(g); }));
@@ -390,17 +364,11 @@ function updateLocalidadeChips(){
   currentLocalidade='todas';
 }
 
-// ── RENDER CARDS ─────────────────────────────────────────
 function renderCards(todayData){
-  const isAgd = currentTab==='regionais' && currentView==='agendamento';
-  document.getElementById('cards-cal').style.display = isAgd ? 'none' : '';
-  document.getElementById('cards-agd').style.display = isAgd ? '' : 'none';
-
-  if(isAgd){
-    renderCardsAgd(todayData);
-  } else {
-    renderCardsCal(todayData);
-  }
+  const isAgd=currentTab==='regionais'&&currentView==='agendamento';
+  document.getElementById('cards-cal').style.display=isAgd?'none':'';
+  document.getElementById('cards-agd').style.display=isAgd?'':'none';
+  isAgd ? renderCardsAgd(todayData) : renderCardsCal(todayData);
 }
 
 function renderCardsCal(dayData){
@@ -423,17 +391,15 @@ function renderCardsAgd(dayData){
 
   Object.entries(grupos).forEach(([k,g])=>{
     if(currentLocalidade!=='todas'&&k!==currentLocalidade) return;
-    entradas  += g.entradas||0;
-    saidas    += g.saidas||0;
-    sce       += g.saidas_com_entrada||0;
-    extra     += g.extra||0;
-    periodica += g.periodica||0;
-    revisao   += g.revisao||0;
-    outros    += g.outros||0;
-    // agrega debug_outros para o tooltip
+    entradas  +=g.entradas||0;
+    saidas    +=g.saidas||0;
+    sce       +=g.saidas_com_entrada||0;
+    extra     +=g.extra||0;
+    periodica +=g.periodica||0;
+    revisao   +=g.revisao||0;
+    outros    +=g.outros||0;
     if(g.debug_outros&&g.debug_outros.length){
       g.debug_outros.forEach(item=>{
-        // item = "Nome (Tipo)" — extrai o tipo
         const match=item.match(/\(([^)]+)\)$/);
         const tipo=match?match[1]:'Outros';
         outrosDetalhes[tipo]=(outrosDetalhes[tipo]||0)+1;
@@ -449,18 +415,24 @@ function renderCardsAgd(dayData){
   document.getElementById('agd-revisao').textContent=revisao;
   document.getElementById('agd-outros').textContent=outros;
 
-  // tooltip outros
+  // estado do card outros
+  const cardOutros=document.getElementById('card-outros-wrap');
+  const subOutros=document.getElementById('agd-outros-sub');
   const tip=document.getElementById('agd-outros-tip');
-  if(Object.keys(outrosDetalhes).length){
+
+  if(outros===0){
+    cardOutros.className='card card-outros sem-dados';
+    subOutros.textContent='sem ocorrências hoje';
+    tip.innerHTML='';
+  } else {
+    cardOutros.className='card card-outros com-dados';
+    subOutros.textContent='passe o mouse para detalhar';
     tip.innerHTML=Object.entries(outrosDetalhes)
       .map(([t,n])=>`<div class="tip-row"><strong>${t}</strong><span>${n}</span></div>`)
       .join('');
-  } else {
-    tip.innerHTML='<div style="color:var(--text-muted)">nenhum registro</div>';
   }
 }
 
-// ── RENDER HEATMAP ───────────────────────────────────────
 function renderHeatmap(data){
   const tipo=getTipoKey();
   const gruposSet=new Set();
@@ -476,12 +448,11 @@ function renderHeatmap(data){
 
   const cellSize=calcCellSize(data.length);
   applyCellSize(cellSize);
-  const fSm=Math.max(8, Math.round(cellSize*0.32))+'px';
-  const fLg=Math.max(9, Math.round(cellSize*0.37))+'px';
+  const fSm=Math.max(8,Math.round(cellSize*0.32))+'px';
+  const fLg=Math.max(9,Math.round(cellSize*0.37))+'px';
   const today=todayStr();
   const isAgd=currentTab==='regionais'&&currentView==='agendamento';
 
-  // header
   let html='<div class="hm-header-row"><div class="hm-header-spacer"></div><div class="hm-cells">';
   data.forEach(d=>{
     const wknd=isWeekend(d.data); const isToday=d.data===today;
@@ -494,7 +465,6 @@ function renderHeatmap(data){
   });
   html+='</div></div>';
 
-  // rows
   grupos.forEach(grupo=>{
     const isOutros=grupo==='Outros';
     html+=`<div class="hm-row"><div class="hm-label${isOutros?' outros':''}" title="${grupo}">${grupo}</div><div class="hm-cells">`;
@@ -502,8 +472,6 @@ function renderHeatmap(data){
       const g=(d[tipo]&&d[tipo][grupo])||{};
       const stress=g.nivel_stress||0;
       const isToday=d.data===today;
-
-      // tooltip
       let tip=`${grupo} · ${d.data}\nStress: ${Math.round(stress*100)}%`;
       if(isAgd){
         tip+=`\nEntradas:${g.entradas||0}  Saídas:${g.saidas||0}  SCE:${g.saidas_com_entrada||0}`;
@@ -516,7 +484,6 @@ function renderHeatmap(data){
         tip+=`\n\nUnidades não mapeadas:\n• ${g.debug_unidades.join('\n• ')}`;
       if(isOutros&&g.debug_outros&&g.debug_outros.length)
         tip+=`\n\nAgendamentos não mapeados:\n• ${g.debug_outros.join('\n• ')}`;
-
       html+=`<div class="hm-cell${isToday?' today-col':''}${isOutros?' outros-cell':''}" style="background:${stressToColor(stress)}" title="${tip}"></div>`;
     });
     html+='</div></div>';
@@ -528,22 +495,18 @@ function renderHeatmap(data){
   }
 }
 
-// ── RENDER ALL ───────────────────────────────────────────
 function renderAll(){
   const data=getFilteredData();
   const today=todayStr();
   const todayData=allData.find(d=>d.data===today)||allData[0];
   if(!todayData) return;
-
   document.getElementById('hoje-label').innerHTML=
     `Hoje — <span>${new Date(today+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</span>`;
-
   renderCards(todayData);
   renderHeatmap(data);
 }
 
 window.addEventListener('resize',()=>{ if(allData.length) renderAll(); });
-
 loadData();
 setInterval(loadData, REFRESH_INTERVAL);
 </script>
