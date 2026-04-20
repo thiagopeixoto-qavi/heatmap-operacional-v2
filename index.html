@@ -14,7 +14,7 @@
     --text-primary:#e8ecf0;--text-secondary:#7a8494;--text-muted:#3d4555;
     --blue:#3d6fa8;--blue-bright:#5a8fd4;--blue-dim:rgba(61,111,168,0.15);--blue-border:rgba(61,111,168,0.3);
     --red:#c44a3a;
-    --cell:28px; /* calculado dinamicamente via JS */
+    --cell:28px;
     --label-w:140px;
     --cell-gap:4px;
   }
@@ -26,6 +26,7 @@
   ::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:2px;}
   ::-webkit-scrollbar-thumb:hover{background:var(--text-secondary);}
 
+  /* ── HEADER ── */
   .header{display:flex;align-items:center;justify-content:space-between;padding:18px 32px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;background:var(--bg);}
   .header-left{display:flex;align-items:center;gap:10px;}
   .brand-mark{width:26px;height:26px;border-radius:5px;background:var(--blue-dim);border:1px solid var(--blue-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
@@ -35,6 +36,7 @@
   .live-dot::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--blue-bright);box-shadow:0 0 0 2px var(--blue-dim);}
   .live-dot.error::before{background:var(--red);box-shadow:0 0 0 2px rgba(196,74,58,0.2);}
 
+  /* ── FILTER BAR ── */
   .filter-bar{padding:11px 32px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
   .filter-group{display:flex;align-items:center;gap:8px;}
   .filter-group-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
@@ -43,48 +45,29 @@
   .chip:hover{border-color:var(--border-hover);color:var(--text-primary);}
   .chip.active{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-bright);}
   .filter-sep{width:1px;height:20px;background:var(--border);flex-shrink:0;}
-
-  /* ── DATE CHIP ── */
   .date-chip-wrap{display:flex;align-items:center;gap:6px;}
-  .date-chip{
-    font-family:'DM Mono',monospace;font-size:11px;
-    color:var(--text-secondary);background:var(--surface);
-    border:1px solid var(--border);border-radius:3px;
-    padding:4px 10px;
-    white-space:nowrap;user-select:none;
-    /* contém o input absoluto */
-    position:relative;
-    display:inline-flex;align-items:center;
-    cursor:pointer;
-    transition:border-color 0.12s, color 0.12s;
-  }
+  .date-chip{font-family:'DM Mono',monospace;font-size:11px;color:var(--text-secondary);background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:4px 10px;white-space:nowrap;user-select:none;position:relative;display:inline-flex;align-items:center;cursor:pointer;transition:border-color 0.12s,color 0.12s;}
   .date-chip:hover{border-color:var(--border-hover);color:var(--text-primary);}
   .date-chip.has-custom{background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-bright);}
-  .date-chip input[type=date]{
-    position:absolute;
-    top:0;left:0;right:0;bottom:0;
-    width:100%;height:100%;
-    opacity:0;
-    cursor:pointer;
-    z-index:2; /* garante que cobre o span */
-  }
-  .date-chip span{
-    position:relative;
-    z-index:1;
-    pointer-events:none; /* cliques passam para o input acima */
-  }
-
+  .date-chip input[type=date]{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2;}
+  .date-chip span{position:relative;z-index:1;pointer-events:none;}
   .date-sep{font-size:10px;color:var(--text-muted);}
   .reset-lnk{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text-muted);cursor:pointer;transition:opacity 0.15s,color 0.12s;white-space:nowrap;user-select:none;line-height:1;}
   .reset-lnk:hover{color:var(--text-secondary);}
   .reset-lnk.hidden{opacity:0;pointer-events:none;width:0;overflow:hidden;display:inline-block;}
   .reset-lnk.visible{opacity:1;pointer-events:auto;display:inline-block;}
 
+  /* ── CONTENT ── */
   .content{padding:24px 32px 0;}
   .today-date-label{font-size:11px;color:var(--text-secondary);font-family:'DM Mono',monospace;margin-bottom:16px;}
   .today-date-label span{color:var(--blue-bright);}
 
-  .cards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:28px;}
+  /* ── CARDS ── */
+  .cards-grid{display:grid;gap:8px;margin-bottom:8px;}
+  .cards-grid.cal{grid-template-columns:repeat(4,1fr);margin-bottom:28px;}
+  .cards-grid.agd-main{grid-template-columns:repeat(3,1fr);}
+  .cards-grid.agd-sec{grid-template-columns:repeat(4,1fr);margin-bottom:28px;}
+
   .card{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:14px 16px 12px;position:relative;overflow:hidden;}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);opacity:0.55;}
   .card.red-accent::before{background:var(--red);opacity:0.65;}
@@ -92,25 +75,38 @@
   .card-value{font-size:32px;font-weight:300;font-family:'DM Mono',monospace;color:var(--text-primary);line-height:1;letter-spacing:-0.02em;}
   .card-value.blue{color:var(--blue-bright);}
   .card-value.red{color:var(--red);}
+  .card-value.sm{font-size:24px;}
   .card-sub{font-size:10px;color:var(--text-muted);margin-top:8px;line-height:1.4;}
 
+  /* card outros com tooltip */
+  .card-outros{position:relative;cursor:default;}
+  .outros-tip{display:none;position:absolute;bottom:calc(100% + 8px);left:0;background:#1e2330;border:1px solid var(--border-hover);border-radius:5px;padding:10px 12px;font-size:10px;color:var(--text-secondary);white-space:nowrap;z-index:50;line-height:1.8;pointer-events:none;}
+  .outros-tip .tip-row{display:flex;justify-content:space-between;gap:20px;}
+  .outros-tip strong{color:var(--text-primary);font-weight:500;}
+  .card-outros:hover .outros-tip{display:block;}
+
+  .secondary-label{font-size:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin:14px 0 10px;display:flex;align-items:center;gap:8px;}
+  .secondary-label::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* ── SECTION HEADER ── */
   .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
   .section-label{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);}
   .section-right{display:flex;align-items:center;gap:12px;}
   .range-info{font-size:10px;color:var(--text-muted);font-family:'DM Mono',monospace;}
   .range-info span{color:var(--blue-bright);}
 
+  /* ── VIEW TOGGLE ── */
   .view-toggle{display:flex;align-items:center;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:2px;}
   .view-toggle.hidden{display:none;}
   .vt-btn{font-family:'DM Sans',sans-serif;font-size:10px;color:var(--text-muted);padding:3px 8px;border-radius:3px;cursor:pointer;transition:all 0.12s;white-space:nowrap;user-select:none;line-height:1.4;}
   .vt-btn:hover{color:var(--text-secondary);}
   .vt-btn.active{background:var(--blue-dim);color:var(--blue-bright);}
 
+  /* ── HEATMAP ── */
   .heatmap-wrap{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:20px 20px 16px;overflow-x:auto;margin-bottom:16px;}
   .heatmap-wrap::-webkit-scrollbar{height:3px;}
   .heatmap-wrap::-webkit-scrollbar-track{background:transparent;}
   .heatmap-wrap::-webkit-scrollbar-thumb{background:var(--text-muted);border-radius:2px;}
-
   .hm-header-row{display:flex;align-items:center;gap:var(--cell-gap);margin-bottom:6px;}
   .hm-header-spacer{width:var(--label-w);min-width:var(--label-w);flex-shrink:0;}
   .hm-row{display:flex;align-items:center;gap:var(--cell-gap);margin-bottom:var(--cell-gap);}
@@ -121,19 +117,20 @@
   .hm-cell:hover{transform:scale(1.2);z-index:10;}
   .hm-cell.today-col{box-shadow:0 0 0 1.5px rgba(90,143,212,0.6);}
   .hm-cell.outros-cell{opacity:0.65;}
-
   .legend-row{display:flex;align-items:center;gap:5px;margin-top:14px;justify-content:space-between;flex-wrap:wrap;}
   .legend-heat{display:flex;align-items:center;gap:5px;}
   .legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-muted);}
   .legend-swatch{width:14px;height:14px;border-radius:2px;flex-shrink:0;}
   .today-swatch{background:var(--bg);border:1.5px solid rgba(90,143,212,0.6);}
 
+  /* ── NOTICE ── */
   .capacity-notice{background:var(--surface-2);border:1px solid var(--border);border-left:2px solid var(--blue);border-radius:4px;padding:10px 14px;font-size:11px;color:var(--text-secondary);line-height:1.5;}
   .capacity-notice strong{color:var(--text-primary);font-weight:500;}
   .loading-msg{color:var(--text-muted);font-size:11px;font-family:'DM Mono',monospace;padding:24px 0;}
 
   @media(max-width:700px){
-    .cards-grid{grid-template-columns:repeat(2,1fr);}
+    .cards-grid.cal,.cards-grid.agd-main{grid-template-columns:repeat(2,1fr);}
+    .cards-grid.agd-sec{grid-template-columns:repeat(2,1fr);}
     .header,.filter-bar,.content{padding-left:16px;padding-right:16px;}
   }
 </style>
@@ -183,11 +180,36 @@
 
 <div class="content">
   <div class="today-date-label" id="hoje-label">Hoje — <span>—</span></div>
-  <div class="cards-grid">
-    <div class="card"><div class="card-label">Check-ins</div><div class="card-value blue" id="card-ci">—</div><div class="card-sub">unidades recebendo hóspedes</div></div>
-    <div class="card"><div class="card-label">Check-outs</div><div class="card-value" id="card-co">—</div><div class="card-sub">unidades liberando hoje</div></div>
-    <div class="card red-accent"><div class="card-label">Turnovers</div><div class="card-value red" id="card-tv">—</div><div class="card-sub">saída e entrada no mesmo dia</div></div>
-    <div class="card"><div class="card-label">Em estadia</div><div class="card-value" id="card-oc">—</div><div class="card-sub">sem movimentação hoje</div></div>
+
+  <!-- CARDS CALENDÁRIO (empreendimentos ou regionais visão calendário) -->
+  <div id="cards-cal">
+    <div class="cards-grid cal">
+      <div class="card"><div class="card-label">Check-ins</div><div class="card-value blue" id="card-ci">—</div><div class="card-sub">unidades recebendo hóspedes</div></div>
+      <div class="card"><div class="card-label">Check-outs</div><div class="card-value" id="card-co">—</div><div class="card-sub">unidades liberando hoje</div></div>
+      <div class="card red-accent"><div class="card-label">Turnovers</div><div class="card-value red" id="card-tv">—</div><div class="card-sub">saída e entrada no mesmo dia</div></div>
+      <div class="card"><div class="card-label">Em estadia</div><div class="card-value" id="card-oc">—</div><div class="card-sub">sem movimentação hoje</div></div>
+    </div>
+  </div>
+
+  <!-- CARDS AGENDAMENTOS (só regionais visão agendamentos) -->
+  <div id="cards-agd" style="display:none">
+    <div class="cards-grid agd-main">
+      <div class="card"><div class="card-label">Entradas</div><div class="card-value blue" id="agd-entradas">—</div><div class="card-sub">agendamentos de entrada</div></div>
+      <div class="card"><div class="card-label">Saídas</div><div class="card-value" id="agd-saidas">—</div><div class="card-sub">agendamentos pós reserva</div></div>
+      <div class="card red-accent"><div class="card-label">Saídas com Entrada</div><div class="card-value red" id="agd-sce">—</div><div class="card-sub">mesma unidade, mesmo dia</div></div>
+    </div>
+    <div class="secondary-label">demais agendamentos</div>
+    <div class="cards-grid agd-sec">
+      <div class="card"><div class="card-label">Extra</div><div class="card-value sm" id="agd-extra">—</div><div class="card-sub">extra + enxoval extra</div></div>
+      <div class="card"><div class="card-label">Periódica</div><div class="card-value sm" id="agd-periodica">—</div><div class="card-sub">limpezas periódicas</div></div>
+      <div class="card"><div class="card-label">Revisão</div><div class="card-value sm" id="agd-revisao">—</div><div class="card-sub">revisões agendadas</div></div>
+      <div class="card card-outros">
+        <div class="card-label">Outros</div>
+        <div class="card-value sm" id="agd-outros">—</div>
+        <div class="card-sub">passe o mouse para detalhar</div>
+        <div class="outros-tip" id="agd-outros-tip"></div>
+      </div>
+    </div>
   </div>
 
   <div class="section-header">
@@ -196,7 +218,7 @@
       <span class="range-info" id="range-info"></span>
       <div class="view-toggle hidden" id="view-toggle">
         <span class="vt-btn active" onclick="setView('calendario',this)">calendário</span>
-        <span class="vt-btn" onclick="setView('agendamento',this)">agendamento</span>
+        <span class="vt-btn" onclick="setView('agendamento',this)">agendamentos</span>
       </div>
     </div>
   </div>
@@ -217,7 +239,7 @@
     </div>
   </div>
 
-  <div class="capacity-notice">
+  <div class="capacity-notice" id="capacity-notice">
     <strong>Em breve:</strong> integração com escala dos times — a carga será calculada contra a capacidade produtiva real de cada equipe, identificando automaticamente os dias que precisam de reforço com diaristas.
   </div>
 </div>
@@ -225,11 +247,11 @@
 <script>
 const WEBHOOK_URL = 'https://n8n.quartoavista.com.br/webhook/HeatMap';
 const REFRESH_INTERVAL = 5 * 60 * 1000;
-const LABEL_W = 140;   // px — largura da coluna de labels
-const CELL_GAP = 4;    // px — gap entre células
-const CELL_MIN = 20;   // px — tamanho mínimo aceitável
-const CELL_MAX = 44;   // px — tamanho máximo aceitável
-const PADDING  = 40;   // px — padding interno do heatmap-wrap (2×20)
+const LABEL_W  = 140;
+const CELL_GAP = 4;
+const CELL_MIN = 20;
+const CELL_MAX = 44;
+const PADDING  = 40;
 
 const heatColors = ['#12151a','#121820','#131d2a','#152338','#1a2e4a','#1f3d60','#2a5280','#9e6020','#b84030','#c42a20'];
 function stressToColor(v){ return heatColors[Math.min(Math.floor(v*10), heatColors.length-1)]; }
@@ -243,20 +265,17 @@ let currentTab='empreendimentos', currentLocalidade='todas', currentView='calend
 let filterFrom='', filterTo='', defaultFrom='', defaultTo='';
 let dataMin='', dataMax='', allData=[];
 
-// ── Calcula o tamanho ideal da célula para preencher o container ──
 function calcCellSize(numCols){
-  const wrap = document.getElementById('heatmap-wrap');
-  if(!wrap || numCols===0) return CELL_MIN;
-  const available = wrap.clientWidth - PADDING - LABEL_W - (numCols - 1) * CELL_GAP;
-  const ideal = Math.floor(available / numCols);
-  return Math.min(CELL_MAX, Math.max(CELL_MIN, ideal));
+  const wrap=document.getElementById('heatmap-wrap');
+  if(!wrap||numCols===0) return CELL_MIN;
+  const available=wrap.clientWidth-PADDING-LABEL_W-(numCols-1)*CELL_GAP;
+  return Math.min(CELL_MAX, Math.max(CELL_MIN, Math.floor(available/numCols)));
 }
-
 function applyCellSize(size){
-  document.documentElement.style.setProperty('--cell', size + 'px');
+  document.documentElement.style.setProperty('--cell', size+'px');
 }
 
-// ── Data load ────────────────────────────────────────────────────
+// ── DATA LOAD ────────────────────────────────────────────
 async function loadData(){
   const dot=document.getElementById('live-dot');
   dot.textContent='atualizando...'; dot.className='live-dot';
@@ -277,14 +296,13 @@ async function loadData(){
   }
 }
 
-// ── Dates ────────────────────────────────────────────────────────
+// ── DATES ────────────────────────────────────────────────
 function initDates(){
   const dates=allData.map(d=>d.data).sort();
   dataMin=dates[0]||todayStr();
   dataMax=dates[dates.length-1]||addDays(todayStr(),30);
   const today=todayStr();
-  defaultFrom=today;
-  defaultTo=addDays(today,30);
+  defaultFrom=today; defaultTo=addDays(today,30);
   if(defaultTo>dataMax) defaultTo=dataMax;
   filterFrom=defaultFrom; filterTo=defaultTo;
   const iF=document.getElementById('date-from');
@@ -294,7 +312,6 @@ function initDates(){
   iF.value=filterFrom; iT.value=filterTo;
   updateDateUI();
 }
-
 function updateDateUI(){
   document.getElementById('lbl-from').textContent=fmtShort(filterFrom);
   document.getElementById('lbl-to').textContent=fmtShort(filterTo);
@@ -305,7 +322,6 @@ function updateDateUI(){
   document.getElementById('date-from').max=filterTo||dataMax;
   document.getElementById('date-to').min=filterFrom||dataMin;
 }
-
 function onDateChange(){
   const f=document.getElementById('date-from').value;
   const t=document.getElementById('date-to').value;
@@ -317,22 +333,37 @@ function onDateChange(){
   }
   updateDateUI(); renderAll();
 }
-
 function resetDates(){
   filterFrom=defaultFrom; filterTo=defaultTo;
   document.getElementById('date-from').value=filterFrom;
   document.getElementById('date-to').value=filterTo;
   updateDateUI(); renderAll();
 }
-
 function getFilteredData(){ return allData.filter(d=>d.data>=filterFrom&&d.data<=filterTo); }
 
-// ── Tabs / Filtros ───────────────────────────────────────────────
+// ── TAB / VIEW / LOCALIDADE ──────────────────────────────
 function setTab(tab,el){
   currentTab=tab;
   document.querySelectorAll('#tab-chips .chip').forEach(c=>c.classList.remove('active'));
   el.classList.add('active');
+  // toggle só visível nas regionais
   document.getElementById('view-toggle').className='view-toggle'+(tab==='regionais'?'':' hidden');
+  // se mudar para empreendimentos, força visão calendário
+  if(tab==='empreendimentos') forceView('calendario');
+  updateLocalidadeChips(); renderAll();
+}
+
+function forceView(view){
+  currentView=view;
+  document.querySelectorAll('.vt-btn').forEach(b=>{
+    b.classList.toggle('active', b.textContent.trim()===(view==='calendario'?'calendário':'agendamentos'));
+  });
+}
+
+function setView(view,el){
+  currentView=view;
+  document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
   updateLocalidadeChips(); renderAll();
 }
 
@@ -342,15 +373,10 @@ function setLocalidade(loc,el){
   el.classList.add('active'); renderAll();
 }
 
-function setView(view,el){
-  currentView=view;
-  document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active'); renderAll();
-}
-
 function getTipoKey(){
   if(currentTab==='empreendimentos') return 'dados_empreendimentos';
-  return currentView==='agendamento'?'dados_regionais_agendamento':'dados_regionais';
+  if(currentView==='agendamento') return 'dados_regionais_agendamento';
+  return 'dados_regionais';
 }
 
 function updateLocalidadeChips(){
@@ -364,8 +390,20 @@ function updateLocalidadeChips(){
   currentLocalidade='todas';
 }
 
-// ── Render ───────────────────────────────────────────────────────
-function renderCards(dayData){
+// ── RENDER CARDS ─────────────────────────────────────────
+function renderCards(todayData){
+  const isAgd = currentTab==='regionais' && currentView==='agendamento';
+  document.getElementById('cards-cal').style.display = isAgd ? 'none' : '';
+  document.getElementById('cards-agd').style.display = isAgd ? '' : 'none';
+
+  if(isAgd){
+    renderCardsAgd(todayData);
+  } else {
+    renderCardsCal(todayData);
+  }
+}
+
+function renderCardsCal(dayData){
   const tipo=getTipoKey(); const grupos=dayData[tipo]||{};
   let ci=0,co=0,tv=0,oc=0;
   Object.entries(grupos).forEach(([k,g])=>{
@@ -378,11 +416,55 @@ function renderCards(dayData){
   document.getElementById('card-oc').textContent=oc;
 }
 
+function renderCardsAgd(dayData){
+  const grupos=dayData['dados_regionais_agendamento']||{};
+  let entradas=0,saidas=0,sce=0,extra=0,periodica=0,revisao=0,outros=0;
+  const outrosDetalhes={};
+
+  Object.entries(grupos).forEach(([k,g])=>{
+    if(currentLocalidade!=='todas'&&k!==currentLocalidade) return;
+    entradas  += g.entradas||0;
+    saidas    += g.saidas||0;
+    sce       += g.saidas_com_entrada||0;
+    extra     += g.extra||0;
+    periodica += g.periodica||0;
+    revisao   += g.revisao||0;
+    outros    += g.outros||0;
+    // agrega debug_outros para o tooltip
+    if(g.debug_outros&&g.debug_outros.length){
+      g.debug_outros.forEach(item=>{
+        // item = "Nome (Tipo)" — extrai o tipo
+        const match=item.match(/\(([^)]+)\)$/);
+        const tipo=match?match[1]:'Outros';
+        outrosDetalhes[tipo]=(outrosDetalhes[tipo]||0)+1;
+      });
+    }
+  });
+
+  document.getElementById('agd-entradas').textContent=entradas;
+  document.getElementById('agd-saidas').textContent=saidas;
+  document.getElementById('agd-sce').textContent=sce;
+  document.getElementById('agd-extra').textContent=extra;
+  document.getElementById('agd-periodica').textContent=periodica;
+  document.getElementById('agd-revisao').textContent=revisao;
+  document.getElementById('agd-outros').textContent=outros;
+
+  // tooltip outros
+  const tip=document.getElementById('agd-outros-tip');
+  if(Object.keys(outrosDetalhes).length){
+    tip.innerHTML=Object.entries(outrosDetalhes)
+      .map(([t,n])=>`<div class="tip-row"><strong>${t}</strong><span>${n}</span></div>`)
+      .join('');
+  } else {
+    tip.innerHTML='<div style="color:var(--text-muted)">nenhum registro</div>';
+  }
+}
+
+// ── RENDER HEATMAP ───────────────────────────────────────
 function renderHeatmap(data){
   const tipo=getTipoKey();
   const gruposSet=new Set();
   data.forEach(d=>Object.keys(d[tipo]||{}).forEach(g=>gruposSet.add(g)));
-
   let grupos=Array.from(gruposSet).filter(g=>g!=='Outros').sort();
   if(gruposSet.has('Outros')) grupos.push('Outros');
   if(currentLocalidade!=='todas') grupos=grupos.filter(g=>g===currentLocalidade||g==='Outros');
@@ -392,16 +474,12 @@ function renderHeatmap(data){
     return;
   }
 
-  // calcula e aplica tamanho das células ANTES de renderizar
-  const numCols = data.length;
-  const cellSize = calcCellSize(numCols);
+  const cellSize=calcCellSize(data.length);
   applyCellSize(cellSize);
-
-  // font-size das labels de data proporcional à célula
-  const dateFontSm = Math.max(8,  Math.round(cellSize * 0.32)) + 'px';
-  const dateFontLg = Math.max(9,  Math.round(cellSize * 0.37)) + 'px';
-
+  const fSm=Math.max(8, Math.round(cellSize*0.32))+'px';
+  const fLg=Math.max(9, Math.round(cellSize*0.37))+'px';
   const today=todayStr();
+  const isAgd=currentTab==='regionais'&&currentView==='agendamento';
 
   // header
   let html='<div class="hm-header-row"><div class="hm-header-spacer"></div><div class="hm-cells">';
@@ -410,8 +488,8 @@ function renderHeatmap(data){
     const color=(isToday||wknd)?'var(--blue-bright)':'var(--text-muted)';
     const fw=(isToday||wknd)?'500':'400';
     html+=`<div style="display:flex;flex-direction:column;align-items:center;width:${cellSize}px;min-width:${cellSize}px;flex-shrink:0;gap:1px;">
-      <span style="font-size:${dateFontSm};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${getDayAbbr(d.data)}</span>
-      <span style="font-size:${dateFontLg};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${d.data.split('-')[2]}</span>
+      <span style="font-size:${fSm};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${getDayAbbr(d.data)}</span>
+      <span style="font-size:${fLg};font-family:'DM Mono',monospace;color:${color};font-weight:${fw};">${d.data.split('-')[2]}</span>
     </div>`;
   });
   html+='</div></div>';
@@ -419,17 +497,26 @@ function renderHeatmap(data){
   // rows
   grupos.forEach(grupo=>{
     const isOutros=grupo==='Outros';
-    html+=`<div class="hm-row">
-      <div class="hm-label${isOutros?' outros':''}" title="${grupo}">${grupo}</div>
-      <div class="hm-cells">`;
+    html+=`<div class="hm-row"><div class="hm-label${isOutros?' outros':''}" title="${grupo}">${grupo}</div><div class="hm-cells">`;
     data.forEach(d=>{
       const g=(d[tipo]&&d[tipo][grupo])||{};
       const stress=g.nivel_stress||0;
       const isToday=d.data===today;
-      let tip=`${grupo} · ${d.data}\nStress: ${Math.round(stress*100)}%\nCI:${g.checkins||0}  CO:${g.checkouts||0}  TV:${g.turnovers||0}  Est:${g.ocupados||0}`;
-      if(isOutros&&g.debug_unidades&&g.debug_unidades.length>0){
-        tip+=`\n\nUnidades não mapeadas:\n• ${g.debug_unidades.join('\n• ')}`;
+
+      // tooltip
+      let tip=`${grupo} · ${d.data}\nStress: ${Math.round(stress*100)}%`;
+      if(isAgd){
+        tip+=`\nEntradas:${g.entradas||0}  Saídas:${g.saidas||0}  SCE:${g.saidas_com_entrada||0}`;
+        if((g.extra||0)+(g.periodica||0)+(g.revisao||0)+(g.outros||0)>0)
+          tip+=`\nExtra:${g.extra||0}  Per:${g.periodica||0}  Rev:${g.revisao||0}  Out:${g.outros||0}`;
+      } else {
+        tip+=`\nCI:${g.checkins||0}  CO:${g.checkouts||0}  TV:${g.turnovers||0}  Est:${g.ocupados||0}`;
       }
+      if(isOutros&&g.debug_unidades&&g.debug_unidades.length)
+        tip+=`\n\nUnidades não mapeadas:\n• ${g.debug_unidades.join('\n• ')}`;
+      if(isOutros&&g.debug_outros&&g.debug_outros.length)
+        tip+=`\n\nAgendamentos não mapeados:\n• ${g.debug_outros.join('\n• ')}`;
+
       html+=`<div class="hm-cell${isToday?' today-col':''}${isOutros?' outros-cell':''}" style="background:${stressToColor(stress)}" title="${tip}"></div>`;
     });
     html+='</div></div>';
@@ -441,19 +528,21 @@ function renderHeatmap(data){
   }
 }
 
+// ── RENDER ALL ───────────────────────────────────────────
 function renderAll(){
   const data=getFilteredData();
   const today=todayStr();
   const todayData=allData.find(d=>d.data===today)||allData[0];
   if(!todayData) return;
+
   document.getElementById('hoje-label').innerHTML=
     `Hoje — <span>${new Date(today+'T12:00:00').toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})}</span>`;
+
   renderCards(todayData);
   renderHeatmap(data);
 }
 
-// recalcula ao redimensionar a janela
-window.addEventListener('resize', ()=>{ if(allData.length) renderAll(); });
+window.addEventListener('resize',()=>{ if(allData.length) renderAll(); });
 
 loadData();
 setInterval(loadData, REFRESH_INTERVAL);
